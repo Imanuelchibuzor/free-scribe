@@ -7,34 +7,55 @@ export default function Translation({message}) {
   const [istranslating, setIsTranslating] = useState(false)
   const [translatedMessage, setTranslatedMessage] = useState('')
 
-  setTranslatedMessage
+  async function handleTranslation() {
+    if (!toLanguage) {
+      alert('Please select a target language');
+      return
+    }
 
+    console.log('Translating...');
+    setIsTranslating(true);
 
-  function translateText () {
-    setIsTranslating(true)
-    console.log('Translating...')
-
-    const text = message;
-    const targetLanguage = toLanguage;
-
-    fetch('https://libretranslate.com/translate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        q: text,             // Text to translate
-        target: targetLanguage, // Target language
-        source: '',        // Source language (optional if auto-detect is enabled)
-      }),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => console.log(data.translatedText)) // Access the translated text
-      .catch(error => console.error('Error:', error));
+    setTimeout(() => {
+      setTranslatedMessage('Hello, thank you for using our translation service!. We currently have an issue with our translation provider, but we will resolve the issue as soon as possible. Thank you for your understanding');
+      setIsTranslating(false);
+    }, 3000)
   }
+
+  // function translateText() {
+  //   setIsTranslating(true);
+  //   console.log('Translating...');
+
+  //   const apiKey = 'API_KEY'
+  //   const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
+
+  //   fetch(url, {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       q: message,          // Text to translate
+  //       target: toLanguage,  // Target language
+  //       format: 'text',      // Format of the input text
+  //     }),
+  //   })
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       const translatedText = data.data.translations[0].translatedText;
+  //       setTranslatedMessage(translatedText);
+  //       console.log('Translated Text:', translatedText);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error:', error);
+  //     })
+  //     .finally(() => {
+  //       setIsTranslating(false);
+  //     });
+  // }
 
   return (
     <main className="flex flex-col gap-5  w-full max-w-[800px]">
@@ -53,7 +74,7 @@ export default function Translation({message}) {
                 )
               })}
           </select>
-          <button onClick={translateText}
+          <button onClick={handleTranslation}
           className="specialBtn px-3 py-2 rounded-lg text-blue-400 hover:text-blue-600 duration-200">
             Translate
           </button>
