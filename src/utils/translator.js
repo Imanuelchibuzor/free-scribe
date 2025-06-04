@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const translate = async (text, targetLang) => {
+const translate = async (text, sourceLang = "en", targetLang) => {
   try {
     const url = "https://translate.googleapis.com/translate_a/single";
     const params = {
       client: "gtx",
-      sl: "en", // source language
+      sl: sourceLang, // source language
       tl: targetLang,
       dt: "t", // return translated text
       q: text,

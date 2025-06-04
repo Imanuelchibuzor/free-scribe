@@ -4,7 +4,7 @@ import { useState } from "react";
 import { LANGUAGES } from "../utils/presets";
 import translate from "../utils/translator";
 
-export default function Translation({ message }) {
+export default function Translation({ sourceLang, message }) {
   const [toLanguage, setToLanguage] = useState("");
   const [istranslating, setIsTranslating] = useState(false);
   const [translatedMessage, setTranslatedMessage] = useState("");
@@ -17,7 +17,7 @@ export default function Translation({ message }) {
 
     setIsTranslating(true);
     try {
-      const tm = await translate(message, toLanguage);
+      const tm = await translate(message, sourceLang, toLanguage);
       setTranslatedMessage(tm);
     } catch (error) {
       console.log(error);
@@ -73,5 +73,6 @@ export default function Translation({ message }) {
 }
 
 Translation.propTypes = {
+  sourceLang: PropTypes.string,
   message: PropTypes.string,
 };

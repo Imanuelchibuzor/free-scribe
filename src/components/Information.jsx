@@ -10,6 +10,7 @@ export default function Information() {
   const [displayNext, setDisplayNext] = useState(true);
   const location = useLocation();
   const { state } = location || {};
+  const sourceLang = state?.language || 'en';
   const transcribedText = state?.message || 'No message was passed';
 
 
@@ -68,7 +69,7 @@ export default function Information() {
           {tab === 'transcription' ?
             (<Transcription message={transcribedText} />)
             :
-            (<Translation message={transcribedText} />)
+            (<Translation sourceLang={sourceLang} message={transcribedText} />)
           }
         </div>
 
